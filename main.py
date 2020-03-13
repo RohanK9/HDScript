@@ -5,9 +5,18 @@ connection = sqlite3.connect('filenames.db')
 cursor = connection.cursor()
 
 def searchTable():
+
+   movieFound = False
+
    fileToSearchFor = input("Please enter the name of the movie you are looking for: ")
    
-   for name in cursor.execute("SELECT * FROM files WHERE fileName LIKE ?", ('%'+fileToSearchFor+'%',)):
-      print(name)
+   searchResults = cursor.execute("SELECT * FROM files WHERE fileName LIKE ?", ('%'+fileToSearchFor+'%',))
+
+   for name in searchResults:
+      print(name[0])
+      movieFound = True
+
+   if not movieFound:
+      print("I don't have that")
 
 searchTable()
